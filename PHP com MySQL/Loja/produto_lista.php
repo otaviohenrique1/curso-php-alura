@@ -1,0 +1,39 @@
+<?php
+	require_once("cabecalho.php");
+	require_once("banco_produto.php");
+	require_once("logica_usuario.php");
+?>
+
+<table class="table table-striped table-bordered">
+	<tr>
+		<th>Nome</th>
+		<th>Preço</th>
+		<th>Descrição</th>
+		<th>Categoria</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<?php
+		$produtos = listaProdutos($conexao);
+		foreach($produtos as $produto):
+	?>
+	<tr>
+		<td><?=$produto['nome']?></td>
+		<td><?=$produto['preco']?></td>
+		<td><?=substr($produto['descricao'], 0, 40)?></td>
+		<td><?=$produto['categoria_nome']?></td>
+		<td>
+			<a class="btn btn-primary" href="produto_altera_formulario.php?id=<?=$produto['id']?>">Alterar</a>
+		</td>
+		<td>
+			<form action="remove_produto.php" method="post">
+				<input type="hidden" name="id" value="<?=$produto['id']?>">
+				<button class="btn btn-danger">Remover</button>
+			</form>
+		</td>
+	</tr>
+	<?php
+		endforeach
+	?>
+</table>
+<?php require_once("rodape.php");?>
